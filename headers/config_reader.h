@@ -5,15 +5,9 @@
 #ifndef THERMAL_CONDUCTIVITY_MPI_CONFIG_READER_H
 #define THERMAL_CONDUCTIVITY_MPI_CONFIG_READER_H
 
-#include <string>
 #include "matrix.h"
+#include "utils.h"
 
-
-typedef struct configuration_t {
-    unsigned int m, n, iterations, plot_freq;
-    double alpha, dt, dx, dy;
-    std::string path_to_matrix;
-} configuration_t;
 
 configuration_t read_config(std::istream &config_file);
 

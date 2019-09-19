@@ -4,8 +4,8 @@ project(thermal_conductivity_mpi)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_COMPILER "mpic++")
 
-set(headers headers/config_reader.h headers/finite_differences.h headers/matrix.h)
-set(sources src/config_reader.cpp src/finite_differences.cpp src/matrix.cpp headers/mpi_transactions.h src/mpi_transactions.cpp)
+set(headers headers/config_reader.h headers/finite_differences.h headers/matrix.h headers/utils.h headers/mpi_transactions.h)
+set(sources src/config_reader.cpp src/finite_differences.cpp src/matrix.cpp src/mpi_transactions.cpp src/utils.cpp)
 
 find_package(Boost REQUIRED COMPONENTS mpi)
 set(Boost_USE_STATIC_LIBS OFF)
