@@ -1,9 +1,17 @@
 #include <iostream>
 #include <fstream>
+#include <boost/mpi.hpp>
 #include "config_reader.h"
 #include "matrix.h"
 
+
 int main(int argc, char *argv[]) {
+    boost::mpi::environment env{argc, argv};
+    boost::mpi::communicator world;
+
+    std::cout << world.rank() << std::endl;
+    return 0;
+
     if (argc != 2) {
         std::cerr << "Incorrect number of arguments." << std::endl;
         return 1;
