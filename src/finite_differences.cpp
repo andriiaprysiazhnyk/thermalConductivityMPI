@@ -3,6 +3,7 @@
 //
 
 #include "finite_differences.h"
+#include "iostream"
 #include <cmath>
 
 void next_state(const Matrix &curr, Matrix &next, double alpha, double dt, double dx, double dy) {

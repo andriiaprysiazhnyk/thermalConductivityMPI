@@ -10,12 +10,8 @@
 
 
 typedef struct configuration_t {
-    unsigned int m;
-    unsigned int n;
-    double alpha;
-    double dt;
-    double dx;
-    double dy;
+    unsigned int m, n, iterations, plot_freq;
+    double alpha, dt, dx, dy;
     std::string path_to_matrix;
 } configuration_t;
 

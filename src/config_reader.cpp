@@ -39,6 +39,10 @@ configuration_t read_config(std::istream &config_file) {
             res.m = std::stoi(value);
         } else if (name == "n") {
             res.n = std::stoi(value);
+        } else if (name == "iterations"){
+            res.iterations = std::stoi(value);
+        } else if (name == "plot_frequency"){
+            res.plot_freq = std::stoi(value);
         } else if (name == "path_to_matrix") {
             res.path_to_matrix = value;
         }
@@ -54,7 +58,6 @@ void read_matrix(std::ifstream &matrix_file, Matrix &matrix, unsigned int begin,
     while ((matrix_file >> number) && (total_read < (end + 1) * matrix.n)) {
         total_read += 1;
         if (total_read <= begin * matrix.n) continue;
-//        std::cout << number << "\n";
         matrix((total_read - 1) / matrix.n - begin, (total_read - 1) % matrix.n ) = std::stod(number);
     }
 }
