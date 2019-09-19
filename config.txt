@@ -1,0 +1,12 @@
+m=8
+n=6
+dt=0.01
+dx=0.01
+dy=0.01
+# Aluminium
+c=920
+density=2700
+k=230
+iterations=11
+plot_frequency=2
+path_to_matrix=/home/viniavskyi/Documents/thermalConductivityMPI/matrix.txt
