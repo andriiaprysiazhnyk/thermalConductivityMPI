@@ -10,7 +10,7 @@ def read_config(path):
     with open(path, "r") as file:
         config_args = dict([line.split("=") for line in file if not line.strip().startswith("#")])
 
-    arguments = ["dt", "dx", "dy", "k", "c", "density"])
+    arguments = ["dt", "dx", "dy", "k", "c", "density"]
     dt, dx, dy, k, c, density = map(lambda x: float(config_args[x]), arguments)
 
     with open(config_args["path_to_matrix"], "r") as file:
