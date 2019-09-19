@@ -1,4 +1,5 @@
 from absl import flags, app
+import copy
 
 FLAGS = flags.FLAGS
 
@@ -23,7 +24,7 @@ def read_config(path):
 def compute_new_temperature(path):
     matrix, dt, dx, dy, alpha = read_config(path)
 
-    new_matrix = matrix.copy()
+    new_matrix = copy.deepcopy(matrix)
 
     while input("Press Enter to print new matrix: ") == "":
         for i in range(1, len(matrix) - 1):
@@ -32,7 +33,7 @@ def compute_new_temperature(path):
                         (matrix[i - 1][j] - 2 * matrix[i][j] + matrix[i + 1][j]) / (dx ** 2) + (
                           matrix[i][j - 1] - 2 * matrix[i][j] + matrix[i][j + 1]) / (dy ** 2))
 
-        matrix = new_matrix.copy()
+        matrix = copy.deepcopy(new_matrix)
 
         print("\n".join([" ".join(map(lambda x: f"{x:6.2f}", line)) for line in matrix]))
 
