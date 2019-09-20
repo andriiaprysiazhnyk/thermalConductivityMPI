@@ -26,7 +26,7 @@ std::string Matrix::to_string() const {
     for (int row = 0; row < m; ++row) {
         ss << '|';
         for (int column = 0; column < n; ++column) {
-            ss << std::setw(7) << data[n * row + column] << " ";
+            ss << std::setw(10) << data[n * row + column] << " ";
         }
         ss << "|\n";
     }
