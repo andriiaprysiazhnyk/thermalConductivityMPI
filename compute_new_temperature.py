@@ -13,7 +13,7 @@ def read_config(path):
     arguments = ["dt", "dx", "dy", "k", "c", "density"]
     dt, dx, dy, k, c, density = map(lambda x: float(config_args[x]), arguments)
 
-    with open(config_args["path_to_matrix"], "r") as file:
+    with open(config_args["path_to_matrix"].strip(), "r") as file:
         matrix = [[float(num) for num in line.split()] for line in file]
 
     return matrix, dt, dx, dy, k / (c * density)

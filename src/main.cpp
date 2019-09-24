@@ -1,12 +1,28 @@
 #include <iostream>
 #include <fstream>
+#include <limits>
 #include <boost/mpi.hpp>
+#include <Magick++.h>
 #include "config_reader.h"
 #include "matrix.h"
 #include "finite_differences.h"
 #include "mpi_transactions.h"
 #include "utils.h"
+#include "heatmap.h"
 
+std::pair<double, double> get_boundary_values(Matrix &matrix) {
+    double value;
+    std::pair<double, double> boundaries(std::numeric_limits<double>::infinity(),
+                                         -std::numeric_limits<double>::infinity());
+    for (int i = 0; i < matrix.m; ++i) {
+        for (int j = 0; j < matrix.n; ++j) {
+            value = matrix(i, j);
+            if (value < boundaries.first) boundaries.first = value;
+            if (value > boundaries.second) boundaries.second = value;
+        }
+    }
+    return boundaries;
+}
 
 const unsigned int ROOT = 0;
 
@@ -82,16 +98,25 @@ int main(int argc, char *argv[]) {
             }
         }
     } else { // root
+        Magick::InitializeMagick(*argv);
+
         Matrix full_matrix(parameters.m, parameters.n);
 //        read full matrix
         read_matrix(matrix_file, full_matrix, 0, parameters.m - 1);
-        std::cout << full_matrix.to_string() << std::endl;
+//        get min and max values of initial matrix
+        auto boundaries = get_boundary_values(full_matrix);
+//        crete buffer for heatmap image
+        auto heatmap = new uint8_t[parameters.m * parameters.n * 3];
+        generate_heatmap(full_matrix, heatmap, boundaries, "img/frame-0.bmp");
 
         unsigned int epochs = parameters.iterations / parameters.plot_freq;
-        for (unsigned int epoch = 0; epoch < epochs; ++epoch) {
+        for (unsigned int epoch = 1; epoch <= epochs; ++epoch) {
             mpi_gather_matrix(full_matrix, world, process_number - 1);
-            std::cout << full_matrix.to_string() << std::endl;
+            generate_heatmap(full_matrix, heatmap, boundaries, "img/frame-" + std::to_string(epoch) + ".bmp");
+            std::cout << "[INFO] Iterations: " << epoch * parameters.plot_freq << "/" << parameters.iterations
+                      << std::endl;
         }
+        delete[] heatmap;
     }
     return 0;
 }
